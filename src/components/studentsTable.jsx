@@ -30,7 +30,7 @@ function StudentsTable({refreshSignal, showConfirmDelete, onToggleStudentReg}) {
                         <th className="px-6 py-3">Section</th>
                         <th className="px-6 py-3 justify-end flex">
                             <button onClick={onToggleStudentReg}
-                            className="ml-5 bg-green-700 border-2 border-green-600 p-4 rounded-lg hover:bg-green-300 hover:border-green-200 hover:text-black">REGISTER</button>
+                            className="ml-5  bg-blue-700 border-2 border-blue-600 p-4 rounded-lg hover:bg-blue-300 hover:border-blue-200 hover:text-black">REGISTER</button>
                         </th>
                     </tr>
                 </thead>

@@ -5,11 +5,13 @@ import NavBar from './components/navBar'
 import StudentsTable from './components/studentsTable'
 import ConfirmDelete from './components/confirmDelete'
 import AddItems from './components/addItems'
+import ItemsTable from './components/itemsTable'
 
 function App() {
   const [showStudentRegistration, setShowStudentRegistration] = useState(false);
   const [showAddItems, setShowAddItems] = useState(false);  
   const [refreshStudents, setRefreshStudents] = useState(false);
+  const [refereshItems, setRefreshItems] = useState(false);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [studentToDelete, setStudentToDelete] = useState({studentID: null, studentName: ""}); 
   //we may pass tow values using this format, and also check your buttons like this to pass more values
@@ -27,10 +29,15 @@ function App() {
     setRefreshStudents(prev => !prev); // this will refresh the table
   };
 
+  const handleCloseAddItem = () => {
+    setRefreshItems(prev => !prev); 
+    setShowAddItems(false);
+  };
+
   return (
     <>
       <div className='bg-white'>
-        <NavBar onToggleShowAddItems={() => setShowAddItems(prev => !prev)} />
+        <NavBar/>
 
         <div className='m-5'>
           <StudentsTable 
@@ -43,11 +50,27 @@ function App() {
         </div>
       </div>
 
+      {showAddItems && 
+        <AddItems 
+          onToggleShowAddItems={() => setShowAddItems(prev => !prev)}
+          onToggleTableRefresh={() => setRefreshItems(prev => !prev)}
+          />}
+      
+      <div className='m-5'>
+        <ItemsTable 
+          onToogleAddItem={() => setShowAddItems(prev => !prev)}
+          refreshSignal={refereshItems}
+          />
+      </div>
+      
+
+      {/* This two needs to be on the bottom part they need to be on the top among all this UIs */}
+
       {showStudentRegistration && (
         <div className='fixed'>
           <StudentRegistration 
             onToggleStudentReg={() => setShowStudentRegistration(prev => !prev)}
-            onToggleTableRefresh={() => setRefreshStudents(prev => !prev)} 
+            onToggleTableRefresh={handleCloseAddItem} 
           />
         </div>
       )}
@@ -62,7 +85,6 @@ function App() {
         </div>
       )}
 
-      {showAddItems && <AddItems onToggleShowAddItems={() => setShowAddItems(prev => !prev)}/>}
     </>
   );
 }
