@@ -3,6 +3,8 @@
 A fullstack web development project allowing admin to track the borrowing history in the inventory without using the traditional paper listing of names that is more vulnerable.
 
 Student Registration
+
+
 <img src="demo/registrationSuccess.png" alt="Description" width="200" height="200">
 <img src="demo/registrationFailed.png" alt="Description" width="200" height="200">
 
