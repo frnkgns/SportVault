@@ -43,12 +43,12 @@ function ItemsTable({refreshSignal, showConfirmDelete, onToogleAddItem}) {
                             <td className="px-6 py-4">{item.itemid}</td>
                             <td className="px-6 py-4">{item.itemname}</td>
                             <td className="px-6 py-4">{item.stocks}</td>
-                            <td className="px-6 py-3 h-full w-40"> {/* Set desired width */}
+                            <td className="px-6 py-3 h-32"> {/* Set desired width */}
                                 {item.image ? (
                                     <img
-                                    src={item.image}
-                                    alt="item"
-                                    className="w-full h-full object-cover rounded-lg"
+                                        src={`http://localhost:5000/images/${item.image}`}
+                                        alt="item"
+                                        className="w-full h-full object-cover rounded-lg"
                                     />
                                 ) : (
                                     <div className="w-full h-full flex items-center justify-center text-gray-500">No image</div>
