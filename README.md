@@ -4,9 +4,10 @@ A fullstack web development project allowing admin to track the borrowing histor
 
 Student Registration
 
-
-<img src="demo/registrationSuccess.png" alt="Description" width="200" height="200">
-<img src="demo/registrationFailed.png" alt="Description" width="200" height="200">
+<div style="display: flex; flex-direction: row; gap: 10px;">
+  <img src="demo/registrationSuccess.png" alt="Registration Success" width="200" height="200">
+  <img src="demo/registrationFailed.png" alt="Registration Failed" width="200" height="200">
+</div>
 
 ## To Be Updated Soon
 
