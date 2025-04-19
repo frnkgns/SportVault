@@ -8,6 +8,8 @@ import AddItems from './components/addItems'
 import ItemsTable from './components/itemsTable'
 
 function App() {
+  const [showStudentTable, setStudentTable] = useState(false);
+
   const [showStudentRegistration, setShowStudentRegistration] = useState(false);
   const [showAddItems, setShowAddItems] = useState(false);  
   const [refreshStudents, setRefreshStudents] = useState(false);
@@ -37,16 +39,19 @@ function App() {
   return (
     <>
       <div className='bg-white'>
-        <NavBar/>
+        <NavBar
+          onToggleItemTable={() => setStudentTable(false)}
+          onToggleStudentTable={() => setStudentTable(true)}
+        />
 
         <div className='m-5'>
-          <StudentsTable 
+          {showStudentTable && <StudentsTable 
             onToggleStudentReg={() => setShowStudentRegistration(prev => !prev)} 
             refreshSignal={refreshStudents} 
 
             //since showConfirmDelete throws the studentID, we need a function to get the data look above
             showConfirmDelete={handleShowConfirmDelete} 
-          />
+          />}
         </div>
       </div>
 
@@ -57,10 +62,10 @@ function App() {
           />}
       
       <div className='m-5'>
-        <ItemsTable 
+        {!showStudentTable && <ItemsTable 
           onToogleAddItem={() => setShowAddItems(prev => !prev)}
           refreshSignal={refereshItems}
-          />
+          />}
       </div>
       
 

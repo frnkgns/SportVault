@@ -23,8 +23,8 @@ function ItemsTable({refreshSignal, showConfirmDelete, onToogleAddItem}) {
     }, [refreshSignal]);
     return (
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table className="w-full text-sm text-left text-white">
-                <thead className="text-xs uppercase bg-gray-50 dark:bg-gray-700 text-white">
+            <table className="w-full text-left text-white">
+                <thead className="text-xl uppercase bg-gray-50 dark:bg-gray-700 text-white">
                     <tr>
                         <th className="px-6 py-3">Item Id</th>
                         <th className="px-6 py-3">Name</th>
@@ -39,7 +39,7 @@ function ItemsTable({refreshSignal, showConfirmDelete, onToogleAddItem}) {
                 </thead>
                 <tbody>
                     {items.map((item) => (
-                        <tr key={item.itemid} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <tr key={item.itemid} className="text-xl; bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             <td className="px-6 py-4">{item.itemid}</td>
                             <td className="px-6 py-4">{item.itemname}</td>
                             <td className="px-6 py-4">{item.stocks}</td>
@@ -48,7 +48,7 @@ function ItemsTable({refreshSignal, showConfirmDelete, onToogleAddItem}) {
                                     <img
                                         src={`http://localhost:5000/images/${item.image}`}
                                         alt="item"
-                                        className="w-full h-full object-cover rounded-lg"
+                                        className="w-full h-full object-cover rounded-lg shadow-2xl"
                                     />
                                 ) : (
                                     <div className="w-full h-full flex items-center justify-center text-gray-500">No image</div>
