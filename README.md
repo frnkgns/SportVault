@@ -9,6 +9,13 @@ A fullstack web development project allowing admin to track the borrowing histor
   <img src="demo/registrationFailed.png" alt="Registration Failed" width="200" height="200">
 </div>
 
+
+## Listing Items and Populating Table
+<div style="display: flex; flex-direction: row; gap: 10px;">
+  <img src="demo/Listing.png" alt="Registration Success" width="200" height="200">
+  <img src="demo/ItemsTable.png" alt="Registration Failed" width="200" height="200">
+</div>
+
 ## To Be Updated Soon
 
 Finally Added a table for items, successfully added new items, will now proceed to remove items in the table. I'll call it a day.
