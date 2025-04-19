@@ -25,11 +25,11 @@ function App() {
     setShowConfirmationModal(true);                           //look below for reference for your future porject hahaha makakalimutin ako e
   };
 
-  const handleCloseConfirmModal = () => {
+  const handleCloseConfirmModal = (e) => {
+    (e == "student") ? setRefreshStudents(prev => !prev) : setRefreshItems(prev => !prev);
+
     setShowConfirmationModal(false);
     setDeleteId(null);
-    setRefreshStudents(prev => !prev); // this will refresh the table
-    setRefreshItems(prev => !prev);
   };
 
   const handleCloseAddItem = () => {
@@ -39,15 +39,13 @@ function App() {
 
   return (
     <>
-    {/* NAVBAR */}
-      <div className='bg-white'>
-        <NavBar
+      <NavBar
           onToggleItemTable={() => setStudentTable(false)}
           onToggleStudentTable={() => setStudentTable(true)}
         />
 
-    {/* STUDENT TABLE */}
-        <div className='m-5'>
+      {/* STUDENT TABLE */}
+      <div className='m-5'>
           {showStudentTable && <StudentsTable 
             onToggleStudentReg={() => setShowStudentRegistration(prev => !prev)} 
             refreshSignal={refreshStudents} 
@@ -56,17 +54,9 @@ function App() {
             showConfirmDelete={handleRemoveData} 
 
           />}
-        </div>
       </div>
-
-    {/* ITEMS TABLE */}
-      {showAddItems && 
-        <AddItems 
-          onToggleShowAddItems={() => setShowAddItems(prev => !prev)}
-          onToggleTableRefresh={() => setRefreshItems(prev => !prev)}
-          showConfirmDelete={handleRemoveData}
-          />}
       
+      {/* ITEM TABLE */}
       <div className='m-5'>
         {!showStudentTable && <ItemsTable 
           onToogleAddItem={() => setShowAddItems(prev => !prev)}
@@ -74,11 +64,16 @@ function App() {
           showConfirmDelete={handleRemoveData}
           />}
       </div>
-      
-
-    {/* This two modal needs to be on the bottom part they need to be on the top among all this UIs */}
-
-    {/* STUDENT REGISTRATION MODAL */}
+    
+      {/* This three modal needs to be on the bottom part they need to be on the top among all this UIs */}
+      {/* ITEM MODAL */}
+      {showAddItems && 
+        <AddItems 
+          onToggleShowAddItems={() => setShowAddItems(prev => !prev)}
+          onToggleTableRefresh={() => setRefreshItems(prev => !prev)}
+          showConfirmDelete={handleRemoveData}
+      />}
+   {/* REGISTRAION MODAL */}
       {showStudentRegistration && (
         <div className='fixed'>
           <StudentRegistration 
@@ -87,20 +82,25 @@ function App() {
           />
         </div>
       )}
-
-    {/* CONFIRMATION DELETE MODAL */}
-      {showConfirmationModal && deleteId && (
+    
+    {/* DELETE CONFIRMATION MODAL */}
+    {showConfirmationModal && deleteId && (
         <div className='fixed'>
           <ConfirmDelete 
             id={deleteId.id}   //so ito yung way para ipasa yung data but first you need to initialize the code above 
-            name={deleteId.name}  
-            type={deleteId.type} //so ito yung way para ipasa yung data but first you need to initialize the code above 
+            name={deleteId.name}  //yang studentid is yung parameter from another jsx file or tinataawag na props here sa react
+            type={deleteId.type}
             img={deleteId.img}
-            onToggleConfirmationModal={handleCloseConfirmModal} //yang studentid is yung parameter from another jsx file or tinataawag na props here sa react
-          />
+            onToggleConfirmationModal={() => handleCloseConfirmModal(deleteId.type)}
+            // the line of code above can be used like this {handleCloseConfirmModal}
+            // if you are not passing a parameter to function
+            // but if you are passing a variable in a function
+            // then you must follow the code as it is the way kung paano mo cinode
+            // hhaaha baka makalimutan ko e
+          />                          
         </div>
       )}
-
+      
     </>
   );
 }

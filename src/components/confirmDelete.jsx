@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 
 //always capitalize the name of the function
+//this jsx will be use for two types for deleting students and deleting items
+//you will c
 function ConfirmDelete({id, name, type, img, onToggleConfirmationModal}){
     const [isDeleting, setIsDeleting] = useState(false);
 
