@@ -3,11 +3,11 @@ import cors from "cors";
 import studentRegRoute from './routes/studentReg.js'
 import getAllStudent from './routes/getAllStudent.js'
 import removeStudent from './routes/removeStudent.js'
-import AddItems from "./routes/addItems.js";
-import getAllItems from './routes/getAllItems.js';
+import AddItems from "./routes/addItems.js"
+import getAllItems from './routes/getAllItems.js'
 import removeItem from './routes/removeItems.js'
-import uploadImageRoute from './routes/saveImageToFolder.js';
-
+import uploadImageRoute from './routes/saveImageToFolder.js'
+import imageRoutes from './routes/removeImage.js'
 
 //Note server wont run unless you go to the server fodler
 //cd server
@@ -26,6 +26,8 @@ app.use('/items', removeItem);
 
 app.use('/images', uploadImageRoute);
 app.use('/images', express.static('images')); // so frontend can access the files
+
+app.use("/images", imageRoutes);
 
 
 const PORT = 5000;

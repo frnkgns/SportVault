@@ -56,7 +56,7 @@ function ItemsTable({refreshSignal, showConfirmDelete, onToogleAddItem}) {
                                 </td>
                             <td className="px-6 py-4 text-right space-x-4">
                                 <button className="font-medium dark:text-green-500 hover:underline">Edit</button>
-                                <button onClick={() => showConfirmDelete(item.itemid, item.itemname)} className="fon-medium dark:text-red-500 hover:underline">Delete</button>
+                                <button onClick={() => showConfirmDelete(item.itemid, item.itemname, "items", item.image)} className="fon-medium dark:text-red-500 hover:underline">Delete</button>
                                 {/* onClick={() => handleDelete(item.itemid)} */} 
                                 {/* i just to backup later i'll paste it again*/}
                             </td>

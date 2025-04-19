@@ -7,7 +7,7 @@ router.delete('/:itemid', async (req, res) => {
     try {
       const result = await pool.query('DELETE FROM items WHERE itemid = $1', [itemid]);
       if (result.rowCount === 0) {
-        return res.status(404).json({ message: 'Student not found' });
+        return res.status(404).json({ message: 'Item not found' });
       }
       res.json({ message: 'Item deleted successfully' });
     } catch (err) {
