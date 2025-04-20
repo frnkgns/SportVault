@@ -20,9 +20,11 @@ function StudentsTable({refreshSignal, showConfirmDelete, onToggleStudentReg}) {
         //using the props to enable the refetch
     }, [refreshSignal]);
     return (
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <div className="relative overflow-auto shadow-md sm:rounded-lg max-h-[35em] -mt-8">
+                                                                    {/* adding max height to make the table scrollable */}
             <table className="w-full text-left text-white">
-                <thead className="text-xl uppercase bg-gray-50 dark:bg-gray-700 text-white">
+                <thead className="text-base uppercase bg-gray-50 dark:bg-gray-700 text-white sticky top-0 z-10">
+                                                {/* sticky top-0 z-10 makes the table head stick to the top and make the header above the layer*/}
                     <tr>
                         <th className="px-6 py-3">Student ID</th>
                         <th className="px-6 py-3">Name</th>
@@ -36,7 +38,7 @@ function StudentsTable({refreshSignal, showConfirmDelete, onToggleStudentReg}) {
                 </thead>
                 <tbody>
                     {students.map((student) => (
-                        <tr key={student.studentid} className="text-lg bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <tr key={student.studentid} className="text-base bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             <td className="px-6 py-4">{student.studentid}</td>
                             <td className="px-6 py-4">{student.studentname}</td>
                             <td className="px-6 py-4">{student.course}</td>

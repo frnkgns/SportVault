@@ -24,9 +24,9 @@ function ItemsTable({refreshSignal, showConfirmDelete, onToogleAddItem}) {
     }, [refreshSignal]);
 
     return (
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table className="w-full text-left text-white">
-                <thead className="text-2xl uppercase bg-gray-50 dark:bg-gray-700 text-white">
+        <div className="relative overflow-y-auto shadow-md sm:rounded-lg max-h-[35em] -mt-8">
+            <table className="w-full text-left text-white table-fixed">
+                <thead className="text-base 2xl:text-xl uppercase bg-gray-50 dark:bg-gray-700 text-white sticky top-0 z-10">
                     <tr>
                         <th className="px-6 py-3">Item Id</th>
                         <th className="px-6 py-3">Name</th>
@@ -39,9 +39,9 @@ function ItemsTable({refreshSignal, showConfirmDelete, onToogleAddItem}) {
                         </th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className="">
                     {items.map((item) => (
-                        <tr key={item.itemid} className="text-xl  bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <tr key={item.itemid} className="text-lg bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             <td className="px-6 py-4">{item.itemid}</td>
                             <td className="px-6 py-4">{item.itemname}</td>
                             <td className="px-6 py-4">{item.stocks}</td>

@@ -6,9 +6,12 @@ import StudentsTable from './components/studentsTable'
 import ConfirmDelete from './components/confirmDelete'
 import AddItems from './components/addItems'
 import ItemsTable from './components/itemsTable'
+import ItemPlacard from './components/itemPlacard'
 
 function App() {
   const [showStudentTable, setStudentTable] = useState(false);
+  const [showItemsPlacar, setShowItemsPlacard] = useState(true);
+  const [showItemsTable, setShowItemsTable] = useState(false);
 
   const [showStudentRegistration, setShowStudentRegistration] = useState(false);
   const [showAddItems, setShowAddItems] = useState(false);  
@@ -25,28 +28,30 @@ function App() {
     setShowConfirmationModal(true);                           //look below for reference for your future porject hahaha makakalimutin ako e
   };
 
-  const handleCloseConfirmModal = (e) => {
-    (e == "student") ? setRefreshStudents(prev => !prev) : setRefreshItems(prev => !prev);
+  const handleCloseConfirmModal = (RefreshType) => {
+    (RefreshType === "student") ? setRefreshStudents(prev => !prev) : setRefreshItems(prev => !prev);
 
     setShowConfirmationModal(false);
     setDeleteId(null);
   };
 
-  const handleCloseAddItem = () => {
-    setRefreshItems(prev => !prev); 
-    setShowAddItems(false);
-  };
-
   return (
     <>
-      <NavBar
-          onToggleItemTable={() => setStudentTable(false)}
-          onToggleStudentTable={() => setStudentTable(true)}
+      <NavBar       
+                            // you may put two use state in one props by wrapping {} them and add ; at the end
+          onToggleItemTable={() => {setStudentTable(false); setShowItemsTable(true); setShowItemsPlacard(false);}}
+          onToggleStudentTable={() => {setStudentTable(true); setShowItemsTable(false); setShowItemsPlacard(false);}}
+          onToggleItemPlacard={() => {setStudentTable(false); setShowItemsTable(false); setShowItemsPlacard(true);}}
         />
 
+      {/* ITEM PLACARD */}
+      <div className='m-5 flex flex-wrap'>
+        {showItemsPlacar && !showItemsTable && !showStudentTable && <ItemPlacard/>}
+      </div>
+
       {/* STUDENT TABLE */}
-      <div className='m-5'>
-          {showStudentTable && <StudentsTable 
+      <div className='m-2'>
+          {showStudentTable && !showItemsTable && !showItemsPlacar && <StudentsTable 
             onToggleStudentReg={() => setShowStudentRegistration(prev => !prev)} 
             refreshSignal={refreshStudents} 
 
@@ -55,10 +60,10 @@ function App() {
 
           />}
       </div>
-      
+
       {/* ITEM TABLE */}
       <div className='m-5'>
-        {!showStudentTable && <ItemsTable 
+        {showItemsTable && !showStudentTable && !showItemsPlacar && <ItemsTable 
           onToogleAddItem={() => setShowAddItems(prev => !prev)}
           refreshSignal={refereshItems}
           showConfirmDelete={handleRemoveData}
@@ -73,12 +78,12 @@ function App() {
           onToggleTableRefresh={() => setRefreshItems(prev => !prev)}
           showConfirmDelete={handleRemoveData}
       />}
-   {/* REGISTRAION MODAL */}
+   {/* STUDENT REGISTRAION MODAL */}
       {showStudentRegistration && (
-        <div className='fixed'>
+        <div className='fixed z-50'>
           <StudentRegistration 
             onToggleStudentReg={() => setShowStudentRegistration(prev => !prev)}
-            onToggleTableRefresh={handleCloseAddItem} 
+            onToggleTableRefresh={() => setRefreshStudents(prev => !prev)} 
           />
         </div>
       )}
@@ -99,7 +104,7 @@ function App() {
             // hhaaha baka makalimutan ko e
           />                          
         </div>
-      )}
+    )}
       
     </>
   );

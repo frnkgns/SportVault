@@ -41,7 +41,7 @@ function StudentRegistration({onToggleStudentReg, onToggleTableRefresh}){
     };
 
     return (
-        <div className="items-center h-screen w-screen justify-center flex flex-col inset-0 z-50 fixed drop-shadow-white drop-shadow-xl/50">
+        <div className="items-center h-screen w-screen justify-center flex flex-col top-0 inset-0 z-50 fixed drop-shadow-white drop-shadow-xl/50">
             <div className=" bg-gray-900 h-fit p-10 rounded-lg flex w-fit flex-col text-white">
                 <div className="flex">
                     <p className="flex text-3xl mb-5 font-semibold">Student Registration Form</p>
@@ -52,24 +52,24 @@ function StudentRegistration({onToggleStudentReg, onToggleTableRefresh}){
                     <form className="max-w-sm mx-auto" onSubmit={handleSubmit}>
                     <div className="mb-5">
                         <label className="block mb-2  font-medium text-gray-900 dark:text-white">Student ID</label>
-                        <input onChange={(e) => setStudentID(e.target.value)}
+                        <input value={studentID} onChange={(e) => setStudentID(e.target.value)}
                         type="text" id="studentID" className="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="21-11345" required />
                     </div>
                     <div className="mb-5">
                         <label className="block mb-2  font-medium text-gray-900 dark:text-white">Student Name</label>
-                        <input onChange={(e) => setName(e.target.value)}
+                        <input value={name} onChange={(e) => setName(e.target.value)}
                         type="text" id="name" className="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Jacob Michael P. Segundo" required />
                     </div>
                     <div className="mb-5 flex gap-5">
                         <div>
                             <label className="block mb-2  font-medium text-gray-900 dark:text-white">Course</label>
-                            <input onChange={(e) => setCourse(e.target.value)}
+                            <input value={course} onChange={(e) => setCourse(e.target.value)}
                             type="text" id="course" className="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="BSCS" required /> 
                         </div>
                         
                         <div>
                             <label className="block mb-2  font-medium text-gray-900 dark:text-white">Year & Field</label>
-                            <input onChange={(e) => setSection(e.target.value)}
+                            <input value={section} onChange={(e) => setSection(e.target.value)}
                             type="text" id="section" className="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="4A DM" required />
                         </div>
                     </div>
