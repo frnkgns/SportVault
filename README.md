@@ -4,7 +4,6 @@ A fullstack web development project allowing admin to track the borrowing histor
 
 <img src="demo/Menu.png" alt="Registration Success" height="auto">
 
-
 ## Student Registration
  
 <div style="display: flex; flex-direction: row; gap: 10px;">
@@ -12,8 +11,8 @@ A fullstack web development project allowing admin to track the borrowing histor
   <img src="demo/registrationFailed.png" alt="Registration Failed" width="200" height="200">
 </div>
 
-
 ## Listing Items and Populating Table
+
 <div style="display: flex; flex-direction: row; gap: 10px;">
   <img src="demo/Listing.png" alt="Registration Success" width="400" height="200">
   <img src="demo/ItemsTable.png" alt="Registration Failed" width="400" height="200">

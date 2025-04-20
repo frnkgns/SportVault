@@ -1,0 +1,89 @@
+.upperShape{
+    border-bottom-right-radius: 50px;
+}
+.upperShape::before{
+    content: "";
+    position: absolute;
+
+    background: transparent;
+    bottom: -15px;
+    height: 15px;
+    width: 15px;
+    left: 0px;
+    border-radius: 30px;
+
+    box-shadow: -8px -8px 0 0 white;
+}
+.upperShape::after{
+    content: "";
+    position: absolute;
+
+    background: transparent;
+    top: 0px;
+    height: 15px;
+    width: 15px;
+    right: -14px;
+    border-radius: 30px;
+
+    box-shadow: -8px -8px 0 0 white;
+}
+
+.lowerRightShape{
+    border-top-left-radius: 25px;
+}
+.lowerRightShape::before{
+    content: "";
+    position: absolute;
+
+    background: transparent;
+    bottom: 0px;
+    height: 15px;
+    width: 15px;
+    left: -15px;
+    border-radius: 30px;
+
+    box-shadow: 8px 8px 0 0 white;
+}
+.lowerRightShape::after{
+    content: "";
+    position: absolute;
+
+    background: transparent;
+    top: -15px;
+    height: 15px;
+    width: 15px;
+    right: 0px;
+    border-radius: 30px;
+
+    box-shadow: 7px 7px 0 0 white;
+}
+
+.lowerLeftShape{
+    border-top-right-radius: 50px;
+}
+.lowerLeftShape::before{
+    content: "";
+    position: absolute;
+
+    background: transparent;
+    top: -15px;
+    height: 15px;
+    width: 15px;
+    left: 0px;
+    border-radius: 30px;
+
+    box-shadow: -8px 8px 0 0 white;
+}
+.lowerLeftShape::after{
+    content: "";
+    position: absolute;
+
+    background: transparent;
+    bottom: 0px;
+    height: 15px;
+    width: 15px;
+    right: -14px;
+    border-radius: 30px;
+
+    box-shadow: -8px 8px 0 0 white;
+}

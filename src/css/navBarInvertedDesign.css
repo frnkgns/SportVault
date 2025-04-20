@@ -1,0 +1,23 @@
+.projdiv {
+    position: absolute; /* Add position relative so the pseudo element will origin off this with position absolute */
+    /* border-radius: 25px;            //before */
+    /* border-top-left-radius: 50px; */
+    border-top-left-radius: 20px;
+  }
+  .projdiv::before {
+    content: "";
+    position: absolute;
+    
+    background-color: transparent;
+    top: 4px;
+    height: 20px;
+    width: 20px;
+    left: -19px;
+    border-radius: 30px;
+  
+    /* this is where the magic begins */
+    /* box-shadow: 0 -25px 0 0 #001f3f; //this is before we you need to assign another color before assigning to similar color of the div */
+  
+    box-shadow: 10px 10px 0 0 white;
+  
+  }

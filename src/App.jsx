@@ -37,20 +37,22 @@ function App() {
 
   return (
     <>
+    <div>
       <NavBar       
                             // you may put two use state in one props by wrapping {} them and add ; at the end
           onToggleItemTable={() => {setStudentTable(false); setShowItemsTable(true); setShowItemsPlacard(false);}}
           onToggleStudentTable={() => {setStudentTable(true); setShowItemsTable(false); setShowItemsPlacard(false);}}
           onToggleItemPlacard={() => {setStudentTable(false); setShowItemsTable(false); setShowItemsPlacard(true);}}
         />
+    </div>
 
       {/* ITEM PLACARD */}
-      <div className='m-5 flex flex-wrap'>
+      <div className='m-2 flex flex-wrap'>
         {showItemsPlacar && !showItemsTable && !showStudentTable && <ItemPlacard/>}
       </div>
 
       {/* STUDENT TABLE */}
-      <div className='m-2'>
+      <div className='m-2 pt-10'>
           {showStudentTable && !showItemsTable && !showItemsPlacar && <StudentsTable 
             onToggleStudentReg={() => setShowStudentRegistration(prev => !prev)} 
             refreshSignal={refreshStudents} 
@@ -62,7 +64,7 @@ function App() {
       </div>
 
       {/* ITEM TABLE */}
-      <div className='m-5'>
+      <div className='ml-5 mr-5'>
         {showItemsTable && !showStudentTable && !showItemsPlacar && <ItemsTable 
           onToogleAddItem={() => setShowAddItems(prev => !prev)}
           refreshSignal={refereshItems}
