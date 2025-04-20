@@ -1,7 +1,7 @@
 # Item Borrowing
 
 A fullstack web development project allowing admin to track the borrowing history in the inventory without using the traditional paper listing of names that is more vulnerable.
-<img src="demo/registrationSuccess.png" alt="Registration Success" height="auto">
+<img src="demo/Menu.png" alt="Registration Success" height="auto">
 
 
 ## Student Registration
