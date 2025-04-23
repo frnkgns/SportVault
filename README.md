@@ -14,7 +14,7 @@ A fullstack web development project allowing admin to track the borrowing histor
 ## Listing Items and Populating Table
 
 <div style="display: flex; flex-direction: row; gap: 10px;">
-  <img src="demo/Listing.png" alt="Registration Success" width="400" height="200">
+  <img src="demo/Listing.png" alt="Registration Success" width="400" height="200"> 
   <img src="demo/ItemsTable.png" alt="Registration Failed" width="400" height="200">
 </div>
 

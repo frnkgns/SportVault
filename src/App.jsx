@@ -59,7 +59,6 @@ function App() {
 
             //since showConfirmDelete throws the studentID, we need a function to get the data look above
             showConfirmDelete={handleRemoveData} 
-
           />}
       </div>
 
@@ -81,14 +80,14 @@ function App() {
           showConfirmDelete={handleRemoveData}
       />}
    {/* STUDENT REGISTRAION MODAL */}
-      {showStudentRegistration && (
+    {showStudentRegistration && (
         <div className='fixed z-50'>
           <StudentRegistration 
             onToggleStudentReg={() => setShowStudentRegistration(prev => !prev)}
             onToggleTableRefresh={() => setRefreshStudents(prev => !prev)} 
           />
         </div>
-      )}
+    )}
     
     {/* DELETE CONFIRMATION MODAL */}
     {showConfirmationModal && deleteId && (

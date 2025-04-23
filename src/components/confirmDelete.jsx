@@ -1,5 +1,6 @@
 // import express from 'express';
 // import pool from "../../server/db";
+import axios from "axios";
 import React, { useState } from "react";
 
 //always capitalize the name of the function
@@ -11,16 +12,16 @@ function ConfirmDelete({id, name, type, img, onToggleConfirmationModal}){
     const handleDelete = async () => {
     setIsDeleting(true);
     try {
-      const res = await fetch((type == "student") ? `http://localhost:5000/student/${id}` 
-                                                  : `http://localhost:5000/items/${id}`, {
-        method: 'DELETE',
+      const res = await axios.delete(
+        type == "student" ? 
+        `http://localhost:5000/student/${id}` 
+        : `http://localhost:5000/items/${id}`, {
       });
 
       if (res.ok) {
         if(img){
           console.log("Trying to delete image:", img); // ✅ Add this
-          await fetch(`http://localhost:5000/images/${img}`, {
-            method: 'DELETE',
+          await axios.delete(`http://localhost:5000/images/${img}`, {
           });
         } else{
           console.log("Trying to delete this image ", img, "but i dont know why its not working"); // ✅ Add this

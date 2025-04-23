@@ -102,6 +102,7 @@ function AddItems({onToggleShowAddItems, onToggleTableRefresh}){
                                 {/* changing type of input allow us to identify what data are we gonna pass */}
                             </div>  
                         </div>
+                        
                     {/* while this code below allow us to preview the image, but of course there are codes needed above*/}
                     <div className="w-auto h-[10rem] flex justify-center bg-neutral-500 mt-4 mb-4 border-2 border-gray-700 rounded-2xl">
                         <img className="object-cover w-full rounded-lg" src={imagePreview} alt="Image Preview" />

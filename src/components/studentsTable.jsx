@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 
 //instead calling this as parameter call it as props
@@ -7,9 +8,9 @@ function StudentsTable({refreshSignal, showConfirmDelete, onToggleStudentReg}) {
     useEffect(() => {
         const fetchStudents = async () => {
             try {
-                const response = await fetch("http://localhost:5000/allstudents");
-                const data = await response.json();
-                setStudents(data);
+                const response = await axios("http://localhost:5000/allstudents");
+                setStudents(response.data);
+                
             } catch (error) {
                 console.error("Failed to fetch students:", error);
             }
@@ -19,6 +20,7 @@ function StudentsTable({refreshSignal, showConfirmDelete, onToggleStudentReg}) {
 
         //using the props to enable the refetch
     }, [refreshSignal]);
+    
     return (
         <div className="relative overflow-auto shadow-md sm:rounded-lg max-h-[35em] -mt-8">
                                                                     {/* adding max height to make the table scrollable */}

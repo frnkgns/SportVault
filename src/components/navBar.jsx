@@ -12,7 +12,7 @@ function NavBar({ onToggleStudentTable, onToggleItemTable, onToggleItemPlacard }
             <img className="h-[4rem] p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" src={Logo} alt="Bordered avatar"/>
             <p>SPORT VAULT</p>
         </div>
-        <div className="projdiv absolute w-full h-6 bg-white text-center bottom-0 left-30"></div>
+        <div className="projdiv absolute w-full h-6 bg-white text-center bottom-0 left-25"></div>
        
       <div className="space-x-10 flex items-center relative group">
         <button onClick={onToggleStudentTable} className="font-medium hover:text-sky-300">Students</button>

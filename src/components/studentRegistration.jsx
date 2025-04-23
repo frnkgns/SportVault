@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 
 function StudentRegistration({onToggleStudentReg, onToggleTableRefresh}){
@@ -15,20 +16,15 @@ function StudentRegistration({onToggleStudentReg, onToggleTableRefresh}){
       setSuccessMessage("");    //set it by empty string
       setErrorMessage("");
   
-      const response = await fetch('http://localhost:5000/student', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ studentID, name, course, section }),
-      });
+      const response = await axios.post('http://localhost:5000/student',
+        { studentID, name, course, section },
+      );
       
-      const data = await response.json();
     //   console.log('Server response:', data);
 
       //then kapag ok yung query fetcth message
       if (response.ok) {
-        setSuccessMessage(data.message);
+        setSuccessMessage(response.data.message);
         setStudentID("");
         setName("");
         setCourse("");
@@ -36,7 +32,7 @@ function StudentRegistration({onToggleStudentReg, onToggleTableRefresh}){
 
         onToggleTableRefresh();
       } else {
-        setErrorMessage(data.error || "Something went wrong.");
+        setErrorMessage(response.data.error || "Something went wrong.");
       }
     };
 

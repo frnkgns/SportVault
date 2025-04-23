@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 
 //instead calling this as parameter call it as props
@@ -8,11 +9,10 @@ function ItemsTable({refreshSignal, showConfirmDelete, onToogleAddItem}) {
     useEffect(() => {
         const fetchitems = async () => {
             try {
-                const response = await fetch("http://localhost:5000/allitems");
-                const data = await response.json();
-                setItems(data);
+                const response = await axios.get("http://localhost:5000/allitems");
+                setItems(response.data);                
+                console.log(response.data);
 
-                console.log(data);
             } catch (error) {
                 console.error("Failed to fetch items:", error);
             }
