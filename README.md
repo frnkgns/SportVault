@@ -4,13 +4,6 @@ A fullstack web development project allowing admin to track the borrowing histor
 
 <img src="demo/Menu.png" alt="Registration Success" height="auto">
 
-## Student Registration
- 
-<div style="display: flex; flex-direction: row; gap: 10px;">
-  <img src="demo/registrationSuccess.png" alt="Registration Success" width="200" height="200">
-  <img src="demo/registrationFailed.png" alt="Registration Failed" width="200" height="200">
-</div>
-
 ## Borrow Item
 
 Click an item you want to borrow in the menu then insert student id and quantity of the items to be borrowed.
@@ -19,6 +12,14 @@ If the student already borrowed and item then we will ask
 <div style="display: flex; flex-direction: row; gap: 10px;">
   <img src="demo/borrow.png" alt="Registration Success" width="400" height="200"> 
   <img src="demo/confirmBorrow.png" alt="Registration Failed" width="400" height="200">
+</div>
+
+
+## Student Registration
+ 
+<div style="display: flex; flex-direction: row; gap: 10px;">
+  <img src="demo/registrationSuccess.png" alt="Registration Success" width="200" height="200">
+  <img src="demo/registrationFailed.png" alt="Registration Failed" width="200" height="200">
 </div>
 
 ## Listing Items and Populating Table
