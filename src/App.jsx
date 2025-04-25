@@ -28,7 +28,9 @@ function App() {
   //we may pass tow values using this format, and also check your buttons like this to pass more values
   // <button onClick={() => showConfirmDelete(student.studentid, student.studentname)} 
 
-  //so this is where we are going to fetch the data to confirmDelete jsx file so we can access it
+  //now this variable was called to hold the data that was passed from the table
+  //following the parameters of the this variable, the parameters format should be the same as how we will pass the 
+  //data from the table
   const handleDataConfig = (ID, NAME, TYPE, IMGNAME, STOCKS, METHOD) => {  //then use a useState
     
     if(METHOD === "delete"){
@@ -70,7 +72,7 @@ function App() {
             onToggleStudentReg={() => setShowStudentRegistration(prev => !prev)} 
             refreshSignal={refreshStudents} 
 
-            //since showConfirmDelete throws the studentID, we need a function to get the data look above
+            //on the studentTable we pass the data through this variable handleDataConfig look for this variable above
             showConfirmDelete={handleDataConfig} 
           />}
       </div>
@@ -78,7 +80,8 @@ function App() {
       {/* ITEM TABLE */}
       <div className='ml-5 mr-5'>
         {showItemsTable && !showStudentTable && !showItemsPlacar && <ItemsTable 
-          onToogleAddItem={() => setShowAddItems(prev => !prev)}
+        dataConfig={handleDataConfig}
+          onToogleAddItem={() => {setShowAddItems(prev => !prev)}}
           refreshSignal={refereshItems}
           showConfirmDelete={handleDataConfig}
           showEdit={handleDataConfig}

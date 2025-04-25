@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 //instead calling this as parameter call it as props
-function ItemsTable({refreshSignal, showConfirmDelete ,onToogleAddItem, showEdit}) {
+function ItemsTable({refreshSignal, showConfirmDelete ,onToogleAddItem, dataConfig}) {
     const [items, setItems] = useState([]);
 
     // Retrieving the data from the database through routes
@@ -58,7 +58,7 @@ function ItemsTable({refreshSignal, showConfirmDelete ,onToogleAddItem, showEdit
                                 )}
                                 </td>
                             <td className="px-6 py-4 text-right space-x-4">
-                                <button onClick={() => onToogleAddItem(item.itemid, item.itemname, "items", item.image, item.stocks, "edit")} className="font-medium dark:text-green-500 hover:underline">Edit</button>
+                                <button onClick={() => dataConfig(item.itemid, item.itemname, "items", item.image, item.stocks, "edit")} className="font-medium dark:text-green-500 hover:underline">Edit</button>
                                 <button onClick={() => showConfirmDelete(item.itemid, item.itemname, "items", item.image, item.stocks, "delete")} className="fon-medium dark:text-red-500 hover:underline">Delete</button>
                                 {/* onClick={() => handleDelete(item.itemid)} */} 
                                 {/* i just to backup later i'll paste it again*/}

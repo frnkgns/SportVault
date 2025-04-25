@@ -3,6 +3,13 @@ import axios from "axios";
 
 function AddItems({onToggleShowAddItems, onToggleTableRefresh, data}){
 
+        const [itemId, setItemId] = useState(''); //this is the id of the item that we are going to edit
+        //we will pass it to the route and in there we will check if there is an id retrieve
+        // if not then it means we are adding a new item
+        //if there its an id then we are editing the item
+        const [tableCateg, setTableCateg] = useState(''); //we will pass a table category to the router so it will
+        //know where to save the data
+
         const [itemName, setItemName] = useState('');
         const [itemStocks, setItemStocks] = useState('');
         const [itemImage, setItemImage] = useState("http://localhost:5000/images/sportsBorrowingSystem.jpeg");   // default image
@@ -16,9 +23,10 @@ function AddItems({onToggleShowAddItems, onToggleTableRefresh, data}){
         //this will allow us to edit the data in the database
         useEffect(() => {
             if(data){
+                setItemId(data.id); //this is the id of the item that we are going to edit
                 setItemName(data.name); //this is the name of the item that we are going to edit
                 setItemStocks(data.stocks); 
-                setImagePreview("http://localhost:5000/images/" + data.image); 
+                setImagePreview("http://localhost:5000/images/" + data.img); 
                 setItemImage(data.img); // this is the image of the item that we are going to edit
             }
         }, [data]);
@@ -54,7 +62,7 @@ function AddItems({onToggleShowAddItems, onToggleTableRefresh, data}){
     
             // Then send the rest of the data
             const response = await axios.post('http://localhost:5000/items', {
-                itemName, itemStocks, itemImage: ImageName,
+                itemId, itemName, itemStocks, itemImage: ImageName,
             });
     
             if (response.status === 200) {

@@ -3,9 +3,15 @@ import pool from '../db.js';
 const router = express.Router();
 
 router.post('/', async (req, res) => {
-    const { itemName, itemStocks, itemImage  } = req.body; // Accessing data sent from frontend
+    const {itemid, itemName, itemStocks, itemImage  } = req.body; // Accessing data sent from frontend
   
-    console.log('Received:', itemName, itemStocks, itemImage);
+    console.log('Received:', itemid, itemName, itemStocks, itemImage);
+
+    // if(itemid){
+    //   const updateId = `
+    //     UPDATE items SET itemname = $1, stocks = $2, image = $3 WHERE itemid = $4
+    //     `;
+    // }
 
     const checkId = `
       SELECT * FROM items where itemid = $1
