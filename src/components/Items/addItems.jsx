@@ -7,8 +7,10 @@ function AddItems({onToggleShowAddItems, onToggleTableRefresh, data}){
         //we will pass it to the route and in there we will check if there is an id retrieve
         // if not then it means we are adding a new item
         //if there its an id then we are editing the item
-        const [tableCateg, setTableCateg] = useState(''); //we will pass a table category to the router so it will
-        //know where to save the data
+
+        let oldImage = data.img; // this is the image of the item that we are going to edit
+        // if the image is not changed then we will use the old image name to update the item in the database
+        // we no longer need to upload the data again in the folder and database
 
         const [itemName, setItemName] = useState('');
         const [itemStocks, setItemStocks] = useState('');
@@ -51,26 +53,25 @@ function AddItems({onToggleShowAddItems, onToggleTableRefresh, data}){
         setErrorMessage("");
     
         try {
-            // First upload the image
-            if (itemImage) {
+            // if not similar to the old image name then we will upload the new image to the folder and database
+            if (itemImage != oldImage) {
                 const formData = new FormData();
                 formData.append('image', itemImage);
                 const uploadRes = await axios.post('http://localhost:5000/images', formData);
                 ImageName = uploadRes.data.filename;
                 console.log('Uploaded:', ImageName);
+            } else {
+                ImageName = oldImage; // use the old image name if not changed
             }
     
             // Then send the rest of the data
             const response = await axios.post('http://localhost:5000/items', {
-                itemId, itemName, itemStocks, itemImage: ImageName,
+                itemId, itemName, itemStocks, itemImage: ImageName, tableCateg: "items"
             });
     
             if (response.status === 200) {
+                handleResetVariables(); // Reset the form fields after successful submission
                 setSuccessMessage(response.data.message);
-                setItemName("");
-                setItemStocks("");      //clearing values allow us to have a clean input avoiding crossing errors
-                setItemImage("http://localhost:5000/images/sportsBorrowingSystem.jpeg");   
-                setImagePreview("http://localhost:5000/images/sportsBorrowingSystem.jpeg"); // clear preview
                 onToggleTableRefresh();
             } else {
                 setErrorMessage(response.data.error || "Something went wrong.");
@@ -82,12 +83,20 @@ function AddItems({onToggleShowAddItems, onToggleTableRefresh, data}){
         }
     };
 
+    const handleResetVariables = () => {
+        setItemName("");
+        setItemStocks("");      //clearing values allow us to have a clean input avoiding crossing errors
+        setItemImage("http://localhost:5000/images/sportsBorrowingSystem.jpeg");   
+        setImagePreview("http://localhost:5000/images/sportsBorrowingSystem.jpeg"); // clear preview
+        onToggleShowAddItems(); // close the modal
+    }
+
     return(
         <div className="items-center h-screen w-screen justify-center flex flex-col inset-0 z-50 fixed drop-shadow-white drop-shadow-2xl">
             <div className=" bg-gray-900 h-fit p-10 rounded-4xl flex w-fit flex-col text-white justify-center">
                 <div className="flex">
-                    <p className="flex text-3xl mb-10 font-semibold">ITEM LISTING FORM</p>
-                    <button onClick={onToggleShowAddItems} className="rounded-lg translate-x-30 -translate-y-10 text-white hover:text-red-500">X</button>
+                    <p className="flex text-3xl mb-10 font-semibold">{itemId ? 'EDIT' : 'ITEM'} LISTING FORM</p>
+                    <button onClick={(onToggleShowAddItems, handleResetVariables)} className="rounded-lg translate-x-30 -translate-y-10 text-white hover:text-red-500">X</button>
                 </div>
 
                 <div className="text-xl">
