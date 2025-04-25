@@ -15,25 +15,30 @@ function StudentRegistration({onToggleStudentReg, onToggleTableRefresh}){
       e.preventDefault();
       setSuccessMessage("");    //set it by empty string
       setErrorMessage("");
-  
-      const response = await axios.post('http://localhost:5000/student',
-        { studentID, name, course, section },
-      );
-      
-    //   console.log('Server response:', data);
 
-      //then kapag ok yung query fetcth message
-      if (response.ok) {
-        setSuccessMessage(response.data.message);
-        setStudentID("");
-        setName("");
-        setCourse("");
-        setSection("");
-
-        onToggleTableRefresh();
-      } else {
-        setErrorMessage(response.data.error || "Something went wrong.");
-      }
+      try{
+        const response = await axios.post('http://localhost:5000/student',
+            { studentID, name, course, section },
+          );
+          
+        //   console.log('Server response:', data);
+    
+          //then kapag ok yung query fetcth message
+          if (response.status === 200) {
+            setSuccessMessage(response.data.message);
+            setStudentID("");
+            setName("");
+            setCourse("");
+            setSection("");
+    
+            onToggleTableRefresh();
+          } else {
+            setErrorMessage(response?.data?.error || "Something went wrong.");
+          }
+      } catch (err) {
+        const errorMsg = err.response?.data?.error || "Something went wrong while registering.";
+        setErrorMessage(errorMsg);
+        console.error("Registration error:", errorMsg);      }
     };
 
     return (

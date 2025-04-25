@@ -22,11 +22,9 @@ function StudentsTable({refreshSignal, showConfirmDelete, onToggleStudentReg}) {
     }, [refreshSignal]);
     
     return (
-        <div className="relative overflow-auto shadow-md sm:rounded-lg max-h-[35em] -mt-8">
-                                                                    {/* adding max height to make the table scrollable */}
+        <div className="relative overflow-auto shadow-md sm:rounded-lg max-h-[35em] -mt-8"> {/* adding max height to make the table scrollable */}
             <table className="w-full text-left text-white">
-                <thead className="text-base uppercase bg-gray-50 dark:bg-gray-700 text-white sticky top-0 z-10">
-                                                {/* sticky top-0 z-10 makes the table head stick to the top and make the header above the layer*/}
+                <thead className="text-base uppercase bg-gray-50 dark:bg-gray-700 text-white sticky top-0 z-10"> {/* sticky top-0 z-10 makes the table head stick to the top and make the header above the layer*/}
                     <tr>
                         <th className="px-6 py-3">Student ID</th>
                         <th className="px-6 py-3">Name</th>
@@ -47,7 +45,7 @@ function StudentsTable({refreshSignal, showConfirmDelete, onToggleStudentReg}) {
                             <td className="px-6 py-4">{student.section}</td>
                             <td className="px-6 py-4 text-right space-x-4">
                                 <button className="font-medium dark:text-green-500 hover:underline">Edit</button>
-                                <button onClick={() => showConfirmDelete(student.studentid, student.studentname, "student", "")} className="fon-medium dark:text-red-500 hover:underline">Delete</button>
+                                <button onClick={() => showConfirmDelete(student.studentid, student.studentname, "student", "", "","delete")} className="fon-medium dark:text-red-500 hover:underline">Delete</button>
                                 {/* onClick={() => handleDelete(student.studentid)} */} 
                                 {/* i just to backup later i'll paste it again*/}
                             </td>

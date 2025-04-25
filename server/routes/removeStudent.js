@@ -4,6 +4,8 @@ const router = express.Router();
 
 router.delete('/:studentid', async (req, res) => {
     const { studentid } = req.params;
+
+    console.log("Deleting student with ID:", studentid); // Debugging line
     try {
       const result = await pool.query('DELETE FROM student WHERE studentid = $1', [studentid]);
       if (result.rowCount === 0) {

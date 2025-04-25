@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import './App.css'
-import StudentRegistration from './components/studentRegistration'
+import StudentRegistration from './components/students/studentRegistration'
 import NavBar from './components/navBar'
-import StudentsTable from './components/studentsTable'
+import StudentsTable from './components/students/studentsTable'
 import ConfirmDelete from './components/confirmDelete'
-import AddItems from './components/addItems'
-import ItemsTable from './components/itemsTable'
-import ItemPlacard from './components/itemPlacard'
+import AddItems from './components/Items/addItems'
+import ItemsTable from './components/Items/itemsTable'
+import ItemPlacard from './components/Items/itemPlacard'
+import Edit from './components/edit'
 
 function App() {
   const [showStudentTable, setStudentTable] = useState(false);
@@ -15,17 +16,29 @@ function App() {
 
   const [showStudentRegistration, setShowStudentRegistration] = useState(false);
   const [showAddItems, setShowAddItems] = useState(false);  
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+
   const [refreshStudents, setRefreshStudents] = useState(false);
   const [refereshItems, setRefreshItems] = useState(false);
-  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  
   const [deleteId, setDeleteId] = useState({id: null, name: "", type: ""}); 
+  const [editID , setEditID] = useState({id: null, name: "", type: "", img: "", stocks: ""});
+
+
   //we may pass tow values using this format, and also check your buttons like this to pass more values
   // <button onClick={() => showConfirmDelete(student.studentid, student.studentname)} 
 
   //so this is where we are going to fetch the data to confirmDelete jsx file so we can access it
-  const handleRemoveData = (ID, NAME, TYPE, IMGNAME) => {  //then use a useState
-    setDeleteId({ id: ID, name: NAME, type: TYPE, img: IMGNAME}); //but its not done yet we need to pass it to the confirmDelete jsx file
-    setShowConfirmationModal(true);                           //look below for reference for your future porject hahaha makakalimutin ako e
+  const handleDataConfig = (ID, NAME, TYPE, IMGNAME, STOCKS, METHOD) => {  //then use a useState
+    
+    if(METHOD === "delete"){
+      setDeleteId({ id: ID, name: NAME, type: TYPE, img: IMGNAME}); //but its not done yet we need to pass it to the confirmDelete jsx file  
+      setShowConfirmationModal(true);   //look below for reference for your future porject hahaha makakalimutin ako e
+      
+    } else if(METHOD === "edit"){
+      setEditID({ id: ID, name: NAME, type: TYPE, img: IMGNAME, stocks: STOCKS});
+      setShowAddItems(true);
+    }
   };
 
   const handleCloseConfirmModal = (RefreshType) => {
@@ -58,7 +71,7 @@ function App() {
             refreshSignal={refreshStudents} 
 
             //since showConfirmDelete throws the studentID, we need a function to get the data look above
-            showConfirmDelete={handleRemoveData} 
+            showConfirmDelete={handleDataConfig} 
           />}
       </div>
 
@@ -67,7 +80,8 @@ function App() {
         {showItemsTable && !showStudentTable && !showItemsPlacar && <ItemsTable 
           onToogleAddItem={() => setShowAddItems(prev => !prev)}
           refreshSignal={refereshItems}
-          showConfirmDelete={handleRemoveData}
+          showConfirmDelete={handleDataConfig}
+          showEdit={handleDataConfig}
           />}
       </div>
     
@@ -77,7 +91,8 @@ function App() {
         <AddItems 
           onToggleShowAddItems={() => setShowAddItems(prev => !prev)}
           onToggleTableRefresh={() => setRefreshItems(prev => !prev)}
-          showConfirmDelete={handleRemoveData}
+          showConfirmDelete={handleDataConfig}
+          data={editID || ''}
       />}
    {/* STUDENT REGISTRAION MODAL */}
     {showStudentRegistration && (
@@ -88,15 +103,20 @@ function App() {
           />
         </div>
     )}
+
+    {/* EDIT MODAL
+    <div className='fixed z-50'>
+        {showEdit && <Edit
+          data={editID}
+          onToggleEdit={() => setShowEdit(prev => !prev)}
+        />}
+    </div> */}
     
     {/* DELETE CONFIRMATION MODAL */}
     {showConfirmationModal && deleteId && (
         <div className='fixed'>
           <ConfirmDelete 
-            id={deleteId.id}   //so ito yung way para ipasa yung data but first you need to initialize the code above 
-            name={deleteId.name}  //yang studentid is yung parameter from another jsx file or tinataawag na props here sa react
-            type={deleteId.type}
-            img={deleteId.img}
+            data={deleteId}
             onToggleConfirmationModal={() => handleCloseConfirmModal(deleteId.type)}
             // the line of code above can be used like this {handleCloseConfirmModal}
             // if you are not passing a parameter to function
@@ -106,7 +126,7 @@ function App() {
           />                          
         </div>
     )}
-      
+
     </>
   );
 }

@@ -1,17 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
-function AddItems({onToggleShowAddItems, onToggleTableRefresh}){
+function AddItems({onToggleShowAddItems, onToggleTableRefresh, data}){
 
         const [itemName, setItemName] = useState('');
         const [itemStocks, setItemStocks] = useState('');
-        // const [itemImageName, setItemImageName] = useState('');
-        const [itemImage, setItemImage] = useState(null);
-        const [imagePreview, setImagePreview] = useState(null);
+        const [itemImage, setItemImage] = useState("http://localhost:5000/images/sportsBorrowingSystem.jpeg");   // default image
+        const [imagePreview, setImagePreview] = useState("http://localhost:5000/images/sportsBorrowingSystem.jpeg"); // default image
         const [successMessage, setSuccessMessage] = useState('');
         const [errorMessage, setErrorMessage] = useState('');    
         
         let ImageName = '';
+        
+        //we will use this useEffect if the this form was called from the edit button in the table
+        //this will allow us to edit the data in the database
+        useEffect(() => {
+            if(data){
+                setItemName(data.name); //this is the name of the item that we are going to edit
+                setItemStocks(data.stocks); 
+                setImagePreview("http://localhost:5000/images/" + data.image); 
+                setItemImage(data.img); // this is the image of the item that we are going to edit
+            }
+        }, [data]);
+
+        console.log("AddItems Data", data);
 
     const handleImagePreview = (e) => {
         const imageFile = e.target.files[0];
@@ -24,6 +36,7 @@ function AddItems({onToggleShowAddItems, onToggleTableRefresh}){
             setImagePreview(null);
         }
     }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setSuccessMessage("");
@@ -40,26 +53,21 @@ function AddItems({onToggleShowAddItems, onToggleTableRefresh}){
             }
     
             // Then send the rest of the data
-            const response = await fetch('http://localhost:5000/items', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({itemName, itemStocks, itemImage: ImageName }),
+            const response = await axios.post('http://localhost:5000/items', {
+                itemName, itemStocks, itemImage: ImageName,
             });
     
-            const data = await response.json();
-    
-            if (response.ok) {
-                setSuccessMessage(data.message);
+            if (response.status === 200) {
+                setSuccessMessage(response.data.message);
                 setItemName("");
                 setItemStocks("");      //clearing values allow us to have a clean input avoiding crossing errors
-                setItemImage(null);   
-                setImagePreview(null); // clear preview
+                setItemImage("http://localhost:5000/images/sportsBorrowingSystem.jpeg");   
+                setImagePreview("http://localhost:5000/images/sportsBorrowingSystem.jpeg"); // clear preview
                 onToggleTableRefresh();
             } else {
-                setErrorMessage(data.error || "Something went wrong.");
+                setErrorMessage(response.data.error || "Something went wrong.");
             }
+
         } catch (err) {
             setErrorMessage("Error uploading file or submitting form.");
             console.error(err);
@@ -94,7 +102,7 @@ function AddItems({onToggleShowAddItems, onToggleTableRefresh}){
                                 <label className="block mb-2  font-medium text-gray-900 dark:text-white">Image</label>
                                 <input 
                                     type="file"
-                                    value={null}
+                                    value={''}
                                     accept="image/*"
                                     onChange={handleImagePreview}
                                     className="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

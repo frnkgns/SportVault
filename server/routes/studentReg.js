@@ -21,10 +21,14 @@ router.post('/', async (req, res) => {
       res.json({ message: 'Student registered successfully!', studentID, name, course, section });
     } catch (err) {
 
-      (err.code === '23505') ? res.status(400).json({ error: 'Student ID already exists. Please use a unique ID.' }) 
-                            : res.status(500).json({ error: 'Database error', details: err.message });
       console.error('Error inserting data:', err);
-    }
+
+      if (err.code === '23505') {
+        return res.status(400).json({ error: 'Student ID already exists. Please use a unique ID.' });
+      }
+
+      return res.status(500).json({ error: 'Database error', details: err.message });
+        }
   });
   
 export default router;
