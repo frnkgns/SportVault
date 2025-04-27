@@ -20,7 +20,7 @@ If the student already borrowed and item then we will ask
 <div style="display: flex; flex-direction: row; gap: 10px;">
   <img src="demo/registrationSuccess.png" alt="Registration Success" width="200" height="200">
   <img src="demo/registrationFailed.png" alt="Registration Failed" width="200" height="200">
-  <img src="demo/studentTable.png" alt="Registration Failed" width="300" height="200">
+  <img src="demo/studentTable.png" alt="Registration Failed" width="400" height="200">
 </div>
 
 ## Item Listing and Table
