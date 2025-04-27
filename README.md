@@ -15,14 +15,15 @@ If the student already borrowed and item then we will ask
 </div>
 
 
-## Student Registration
+## Student Registration and Table
  
 <div style="display: flex; flex-direction: row; gap: 10px;">
   <img src="demo/registrationSuccess.png" alt="Registration Success" width="200" height="200">
   <img src="demo/registrationFailed.png" alt="Registration Failed" width="200" height="200">
+  <img src="demo/studentTable.png" alt="Registration Failed" width="200" height="200">
 </div>
 
-## Listing Items and Populating Table
+## Item Listing and Table
 
 <div style="display: flex; flex-direction: row; gap: 10px;">
   <img src="demo/Listing.png" alt="Registration Success" width="400" height="200"> 
