@@ -29,8 +29,13 @@ If the student already borrowed and item then we will ask
   <img src="demo/ItemsTable.png" alt="Registration Failed" width="400" height="200">
 </div>
 
+## Edit Student and Item Data
+
+<div style="display: flex; flex-direction: row; gap: 10px;">
+  <img src="demo/editStudent.png" alt="Registration Success" width="400" height="200"> 
+  <img src="demo/editItem.png" alt="Registration Failed" width="400" height="200">
+</div>
+
 ## To Be Updated Soon
 
-Finally Added a table for items, successfully added new items, will now proceed to remove items in the table. I'll call it a day.
-
-Next Task is to remove an item in the table or the record
+Next Showing pop up message like a modal on the right side for notifying user for success or error operations and also ui sucks on adding and editing data
