@@ -6,6 +6,7 @@ function ItemsTable({refreshSignal, showConfirmDelete ,onToogleAddItem, dataConf
     const [items, setItems] = useState([]);
 
     // Retrieving the data from the database through routes
+    // to avoid re rendering of the table we will use the refreshSignal to refetch the data
     useEffect(() => {
         const fetchitems = async () => {
             try {
@@ -22,6 +23,28 @@ function ItemsTable({refreshSignal, showConfirmDelete ,onToogleAddItem, dataConf
         //using the props to enable the refetch
     }, [refreshSignal]);
 
+    const handleNewItemClick = () => {
+        dataConfig("", "", "items", "", "", "new");
+        onToogleAddItem();
+    };
+
+    const handleDataPass = ({type, item}) => {
+        switch(type){
+            case "edit":
+                dataConfig(item.itemid, item.itemname, "items", item.image, item.stocks, "edit", '', '')
+                onToogleAddItem();
+                break;
+
+            case "delete":
+                showConfirmDelete(item.itemid, item.itemname, "items", item.image, item.stocks, "delete", '', '')
+                showConfirmDelete();
+                break;
+
+            default:
+                break;
+        }
+    };
+
     return (
         <div className="relative overflow-y-auto shadow-md sm:rounded-lg max-h-[35em] -mt-8">
             <table className="w-full text-left text-white table-fixed">
@@ -32,7 +55,7 @@ function ItemsTable({refreshSignal, showConfirmDelete ,onToogleAddItem, dataConf
                         <th className="px-6 py-3">Stocks</th>
                         <th className="px-6 py-3">Image</th>
                         <th className="px-6 py-3 justify-end flex">
-                            <button onClick={onToogleAddItem}
+                            <button onClick={handleNewItemClick}
                             className="ml-5 bg-blue-700 border-2 border-blue-600 p-4 rounded-lg hover:bg-blue-300 hover:border-blue-200 hover:text-black">
                                 NEW</button>
                         </th>
@@ -58,8 +81,8 @@ function ItemsTable({refreshSignal, showConfirmDelete ,onToogleAddItem, dataConf
                                 )}
                                 </td>
                             <td className="px-6 py-4 text-right space-x-4">
-                                <button onClick={() => dataConfig(item.itemid, item.itemname, "items", item.image, item.stocks, "edit")} className="font-medium dark:text-green-500 hover:underline">Edit</button>
-                                <button onClick={() => showConfirmDelete(item.itemid, item.itemname, "items", item.image, item.stocks, "delete")} className="fon-medium dark:text-red-500 hover:underline">Delete</button>
+                                <button onClick={() => handleDataPass({type: "edit", item: item})} className="font-medium dark:text-green-500 hover:underline">Edit</button>
+                                <button onClick={() => handleDataPass({type: "delete", item: item})} className="fon-medium dark:text-red-500 hover:underline">Delete</button>
                                 {/* onClick={() => handleDelete(item.itemid)} */} 
                                 {/* i just to backup later i'll paste it again*/}
                             </td>

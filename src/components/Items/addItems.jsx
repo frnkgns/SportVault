@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
+import OperationMessage from "../operationMessage";
 
 function AddItems({onToggleShowAddItems, onToggleTableRefresh, data}){
 
@@ -16,24 +17,49 @@ function AddItems({onToggleShowAddItems, onToggleTableRefresh, data}){
         const [itemStocks, setItemStocks] = useState('');
         const [itemImage, setItemImage] = useState("http://localhost:5000/images/sportsBorrowingSystem.jpeg");   // default image
         const [imagePreview, setImagePreview] = useState("http://localhost:5000/images/sportsBorrowingSystem.jpeg"); // default image
-        const [successMessage, setSuccessMessage] = useState('');
-        const [errorMessage, setErrorMessage] = useState('');    
         
+        const [showMessageModal, setShowMessageModal] = useState(false);
+        const [messageData, setMessageData] = useState({message: '', type: ''});
+
         let ImageName = '';
-        
+
         //we will use this useEffect if the this form was called from the edit button in the table
         //this will allow us to edit the data in the database
+        // Reset states every time the modal opens or the 'data' changes
+        // using a useEffect to reset the states when the modal opens
+        // it prevent the re rendering of the modal when the data is passed from the table
         useEffect(() => {
-            if(data){
-                setItemId(data.id); //this is the id of the item that we are going to edit
-                setItemName(data.name); //this is the name of the item that we are going to edit
-                setItemStocks(data.stocks); 
-                setImagePreview("http://localhost:5000/images/" + data.img); 
-                setItemImage(data.img); // this is the image of the item that we are going to edit
+            if (data && data.id !== null) {
+                switch (data.method) {
+                    case "edit":
+                        setItemId(data.id);
+                        setItemName(data.name);
+                        setItemStocks(data.stocks);
+                        setImagePreview("http://localhost:5000/images/" + data.img);
+                        setItemImage(data.img);
+                        break;
+                    
+                    default:    //default if the case is "new"
+                        setImagePreview("http://localhost:5000/images/sportsBorrowingSystem.jpeg"); // clear preview
+                        setItemImage("http://localhost:5000/images/sportsBorrowingSystem.jpeg"); 
+                        break;
+                }
             }
+
+            console.log("AddItems", data);
+
         }, [data]);
 
-        console.log("AddItems Data", data);
+        const handleResetVariables = () => {
+            setItemId('');
+            setItemName("");
+            setItemStocks("");      //clearing values allow us to have a clean input avoiding crossing errors
+            setItemImage("http://localhost:5000/images/sportsBorrowingSystem.jpeg");   
+            setImagePreview("http://localhost:5000/images/sportsBorrowingSystem.jpeg"); // clear preview
+            onToggleShowAddItems(); // close the modal
+        }
+        
+
 
     const handleImagePreview = (e) => {
         const imageFile = e.target.files[0];
@@ -49,9 +75,6 @@ function AddItems({onToggleShowAddItems, onToggleTableRefresh, data}){
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setSuccessMessage("");
-        setErrorMessage("");
-    
         try {
             // if not similar to the old image name then we will upload the new image to the folder and database
             if (itemImage != oldImage) {
@@ -70,33 +93,38 @@ function AddItems({onToggleShowAddItems, onToggleTableRefresh, data}){
             });
     
             if (response.status === 200) {
-                handleResetVariables(); // Reset the form fields after successful submission
-                setSuccessMessage(response.data.message);
+                setMessageData({ message: response.data.message, type: "success" });
+                setShowMessageModal(true);
                 onToggleTableRefresh();
+                handleResetVariables(); // Reset the form fields after successful submission
             } else {
-                setErrorMessage(response.data.error || "Something went wrong.");
+                setMessageData({ message: response.data.message, type: "error" });
+                setShowMessageModal(true);
             }
 
+            setTimeout(() => {
+                setShowMessageModal(false);
+                setMessageData({ message: '', type: '' }); // optional clean-up
+            }, 1000)
+
         } catch (err) {
-            setErrorMessage("Error uploading file or submitting form.");
+            // setErrorMessage("Error uploading file or submitting form.");
             console.error(err);
         }
     };
 
-    const handleResetVariables = () => {
-        setItemName("");
-        setItemStocks("");      //clearing values allow us to have a clean input avoiding crossing errors
-        setItemImage("http://localhost:5000/images/sportsBorrowingSystem.jpeg");   
-        setImagePreview("http://localhost:5000/images/sportsBorrowingSystem.jpeg"); // clear preview
-        onToggleShowAddItems(); // close the modal
-    }
-
     return(
         <div className="items-center h-screen w-screen justify-center flex flex-col inset-0 z-50 fixed drop-shadow-white drop-shadow-2xl">
+            {showMessageModal && 
+                <OperationMessage
+                message={messageData.message}
+                type={messageData.type}
+            />}
+
             <div className=" bg-gray-900 h-fit p-10 rounded-4xl flex w-fit flex-col text-white justify-center">
                 <div className="flex">
                     <p className="flex text-3xl mb-10 font-semibold">{itemId ? 'EDIT' : 'ITEM'} LISTING FORM</p>
-                    <button onClick={(onToggleShowAddItems, handleResetVariables)} className="rounded-lg translate-x-30 -translate-y-10 text-white hover:text-red-500">X</button>
+                    <button onClick={handleResetVariables} className="rounded-lg translate-x-30 -translate-y-10 text-white hover:text-red-500">X</button>
                 </div>
 
                 <div className="text-xl">
@@ -137,31 +165,7 @@ function AddItems({onToggleShowAddItems, onToggleTableRefresh, data}){
                 </form>
             </div>
         </div>
-
-        {successMessage && (
-            <div className="flex items-center mt-10 p-4 mb-4  text-green-800 border border-green-300 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 dark:border-green-800" role="alert">
-                <svg className="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-                </svg>
-                <span className="sr-only">Info</span>
-                <div>
-                    <span className="font-medium">Success!</span> {successMessage}
-                </div>
-            </div>
-        )}
-
-            {/* ❌ Error Message */}
-        {errorMessage && (
-            <div className="flex items-center p-4 mt-10 mb-4  text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert">
-                <svg className="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-                </svg>
-                <span className="sr-only">Info</span>
-                <div>
-                <span className="font-medium">Oops!</span> {errorMessage}
-                </div>
-          </div>
-        )}            
+      
     </div>
 
     );

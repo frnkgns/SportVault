@@ -7,7 +7,7 @@ router.get('/', async (req, res) => {
     try {
       // Execute the query
       const data = await pool.query('SELECT * FROM items');
-      res.json(data.rows);
+      res.json(data.rows.reverse());
     } catch (err) {
         res.status(500).json({error: 'Database Error', details:err.message});
     }

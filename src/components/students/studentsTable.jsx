@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import OperationMessage from "../operationMessage";
 
 //instead calling this as parameter call it as props
-function StudentsTable({refreshSignal, showConfirmDelete, onToggleStudentReg}) {
+function StudentsTable({refreshSignal, showConfirmDelete, onToggleStudentReg, dataConfig}) {
     const [students, setStudents] = useState([]);
 
     useEffect(() => {
@@ -20,18 +21,39 @@ function StudentsTable({refreshSignal, showConfirmDelete, onToggleStudentReg}) {
 
         //using the props to enable the refetch
     }, [refreshSignal]);
+
+    const handleNewStudentClick = () => {
+        dataConfig('', '', "student", '', '', "newstudent", '', '')
+        onToggleStudentReg();
+    };
+
+    const handleDataPass = (type, student) => {
+        console.log("Student Data Config: : ", type);
+        console.log(type, ": ", student.studentid);
+        switch(type){
+            case "edit":
+                dataConfig(student.studentid, student.studentname, "student", "", "", "edit", student.course, student.section)
+                console.log("Editing Student: ", student.studentid)
+                break;
+
+            case "delete":
+                showConfirmDelete(student.studentid, student.studentname, "student", "", "","delete", student.course, student.section)
+                console.log("Deleting Student: ", student.studentid)
+                break;            
+            }
+    }
     
     return (
-        <div className="relative overflow-auto shadow-md sm:rounded-lg max-h-[35em] -mt-8"> {/* adding max height to make the table scrollable */}
+        <div className="relative overflow-auto shadow-md sm:rounded-lg max-h-[35em] -mt-8">
             <table className="w-full text-left text-white">
-                <thead className="text-base uppercase bg-gray-50 dark:bg-gray-700 text-white sticky top-0 z-10"> {/* sticky top-0 z-10 makes the table head stick to the top and make the header above the layer*/}
+                <thead className="text-base uppercase bg-gray-50 dark:bg-gray-700 text-white sticky top-0 z-10">
                     <tr>
                         <th className="px-6 py-3">Student ID</th>
                         <th className="px-6 py-3">Name</th>
                         <th className="px-6 py-3">Course</th>
                         <th className="px-6 py-3">Section</th>
                         <th className="px-6 py-3 justify-end flex">
-                            <button onClick={onToggleStudentReg}
+                            <button onClick={handleNewStudentClick}
                             className="ml-5  bg-blue-700 border-2 border-blue-600 p-4 rounded-lg hover:bg-blue-300 hover:border-blue-200 hover:text-black">REGISTER</button>
                         </th>
                     </tr>
@@ -44,8 +66,8 @@ function StudentsTable({refreshSignal, showConfirmDelete, onToggleStudentReg}) {
                             <td className="px-6 py-4">{student.course}</td>
                             <td className="px-6 py-4">{student.section}</td>
                             <td className="px-6 py-4 text-right space-x-4">
-                                <button className="font-medium dark:text-green-500 hover:underline">Edit</button>
-                                <button onClick={() => showConfirmDelete(student.studentid, student.studentname, "student", "", "","delete")} className="fon-medium dark:text-red-500 hover:underline">Delete</button>
+                                <button onClick={() => handleDataPass("edit", student)} className="font-medium dark:text-green-500 hover:underline">Edit</button>
+                                <button onClick={() => handleDataPass("delete", student)} className="fon-medium dark:text-red-500 hover:underline">Delete</button>
                                 {/* onClick={() => handleDelete(student.studentid)} */} 
                                 {/* i just to backup later i'll paste it again*/}
                             </td>

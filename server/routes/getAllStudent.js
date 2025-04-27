@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
       const data = await pool.query('SELECT * FROM student');
   
       // Respond back after successful insertion
-      res.json(data.rows);
+      res.json(data.rows.reverse());
     } catch (err) {
         res.status(500).json({error: 'Database Error', details:err.message});
     }

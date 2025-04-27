@@ -1,4 +1,4 @@
-function ConfirmBorrow({borrowedRecord, onCloseConfirmBorrow, AllowBorrow, successMessage, errorMessage}) {
+function ConfirmBorrow({borrowedRecord, onCloseConfirmBorrow, AllowBorrow}) {
     
     return(
         <div className="confirm-borrow bg-gray-900 h-fit pl-10 pr-10 pt-5 pb-5 rounded-lg flex w-[30rem] flex-col text-white">
@@ -31,33 +31,6 @@ function ConfirmBorrow({borrowedRecord, onCloseConfirmBorrow, AllowBorrow, succe
                 <button type="button" onClick={AllowBorrow} className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg  w-full sm:w-auto px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Yes</button>
                 <button type="button" onClick={onCloseConfirmBorrow} className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg  w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">No</button>
             </div>
-
-            
-            {/* Success Message if record was saved */}
-            {successMessage && (
-                <div className="flex items-center mt-10 p-4 mb-4  text-green-800 border border-green-300 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 dark:border-green-800" role="alert">
-                    <svg className="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-                    </svg>
-                    <span className="sr-only">Info</span>
-                    <div>
-                        <span className="font-medium">Success!</span> {successMessage}
-                    </div>
-                </div>
-            )}
-
-            {/* Error Message if registration fails*/}
-            {errorMessage && (
-                <div className="flex items-center p-4 mt-10 mb-4  text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert">
-                    <svg className="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-                    </svg>
-                    <span className="sr-only">Info</span>
-                    <div>
-                    <span className="font-medium">Oops!</span> {errorMessage}
-                    </div>
-              </div>
-            )}    
         </div>
     );
 }
