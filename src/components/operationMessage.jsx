@@ -25,6 +25,7 @@ function OperationMessage({ message, type, closeOperationModal }) {
     }, [message, type]);
 
     console.log("OperationMessage", message, type);
+    
 
   return (
     <div className="top-0 right-0">
