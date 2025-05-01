@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-function StudentRegistration({onToggleStudentReg, onToggleTableRefresh, data}){
+function StudentRegistration({onToggleStudentReg, onToggleTableRefresh, data, messageModal}){
 
     // i think react used useState as a variable so we don't do traditional variable here
     const [studentData, setStudentData] = useState({oldId: '', studentid: '', name: '', course: '', section: ''});   
@@ -16,11 +16,14 @@ function StudentRegistration({onToggleStudentReg, onToggleTableRefresh, data}){
           if (response.status === 200) {    //if success then reset the data
             setStudentData({oldId:'', studentid: '', name: '', course: '', section: ''})
             onToggleTableRefresh();
+            messageModal("Student Registration Complete!", "success");
+
+            console.log("Student Registered Sucessfully");
           }
 
       } catch (err) {
         const errorMsg = err.response?.data?.error || "Something went wrong while registering.";
-        // setErrorMessage(errorMsg);
+        messageModal(`Something went wrong: ${errorMsg}`, "error");
         console.error("Registration error:", errorMsg);      }
     };
 

@@ -7,12 +7,14 @@ import ConfirmDelete from './components/confirmDelete'
 import AddItems from './components/Items/addItems'
 import ItemsTable from './components/Items/itemsTable'
 import ItemPlacard from './components/Items/itemPlacard'
+import OperationMessage from './components/operationMessage'
 
 function App() {
   const [showTables, setShowTable] = useState({student: false, items: false, placard: true});
   const [showAddItemModal, setShowAddItemModal] = useState(false);
   const [showAddStudentModal, setShowAddStudentModal] = useState(false);
-
+  const [showMessageModal, setShowMessageModal] = useState(false);
+  const [message, setMessage] = useState({message: 'no message pass', type: 'error'}); 
 
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
@@ -69,6 +71,11 @@ function App() {
 
     setShowConfirmationModal(false);
     setDeleteId({ id: null, name: "", type: "" });
+  };
+
+  const handleOperationModal = (Message, Type) => {
+    setMessage({message: Message, type: Type});
+    setShowMessageModal(true);
   };
 
   return (
@@ -131,6 +138,7 @@ function App() {
             onToggleStudentReg={() => setShowAddStudentModal(false)}
             onToggleTableRefresh={() => setRefreshState(prev => ({ ...prev, students: !prev.students }))} 
             data={editID}
+            messageModal={handleOperationModal}
           />
         </div>
     )}
@@ -149,6 +157,16 @@ function App() {
           />                          
         </div>
     )}
+
+    <div className='absolute right-0 top-0 mr-10 mt-10 z-50'>
+      {showMessageModal && 
+      <OperationMessage
+        message={message.message}
+        type={message.type}
+        closeOperationModal={setShowMessageModal}
+      />}
+    </div>
+
 
     </>
   );

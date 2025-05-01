@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 
-function OperationMessage({ message, type }) {
+function OperationMessage({ message, type, closeOperationModal }) {
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
@@ -17,6 +17,11 @@ function OperationMessage({ message, type }) {
             setSuccessMessage('');
             setShowErrorMessage(true);
         }
+
+        setTimeout(() =>{
+            closeOperationModal();
+        }, 5000)
+
     }, [message, type]);
 
     console.log("OperationMessage", message, type);
@@ -48,6 +53,8 @@ function OperationMessage({ message, type }) {
         )}          
     </div>
   );
+
+
 }
 
 export default OperationMessage;
