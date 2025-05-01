@@ -20,7 +20,6 @@ function ConfirmDelete({data, onToggleConfirmationModal, messageModal}){
         : `http://localhost:5000/items/${data.id}`, {
       });
 
-      
       if (res.status === 200) {
         if(data.img){
           console.log("Trying to delete image:", data.img);
