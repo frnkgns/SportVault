@@ -128,6 +128,7 @@ function App() {
           onToggleTableRefresh={() => setRefreshState(prev => ({ ...prev, items: !prev.items }))}
           showConfirmDelete={handleDataConfig}
           data={editID}
+          messageModal={handleOperationModal}
         />
       }
 
@@ -149,6 +150,7 @@ function App() {
           <ConfirmDelete 
             data={deleteId}
             onToggleConfirmationModal={() => handleCloseConfirmModal(deleteId.type)}
+            messageModal={handleOperationModal}
             // the line of code above can be used like this {handleCloseConfirmModal}
             // if you are not passing a parameter to function
             // but if you are passing a variable in a function

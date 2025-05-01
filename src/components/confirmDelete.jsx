@@ -6,7 +6,7 @@ import React, { useState } from "react";
 //always capitalize the name of the function
 //this jsx will be use for two types for deleting students and deleting items
 //you will c
-function ConfirmDelete({data, onToggleConfirmationModal}){
+function ConfirmDelete({data, onToggleConfirmationModal, messageModal}){
     const [isDeleting, setIsDeleting] = useState(false);
 
     console.log("Data in confirmDelete:", data); // ✅ Add this
@@ -22,7 +22,7 @@ function ConfirmDelete({data, onToggleConfirmationModal}){
 
       if (res.status === 200) {
         if(data.img){
-          console.log("Trying to delete image:", data.img); // ✅ Add this
+          console.log("Trying to delete image:", data.img);
           await axios.delete(`http://localhost:5000/images/${data.img}`, {
           });
         } else{
@@ -30,14 +30,12 @@ function ConfirmDelete({data, onToggleConfirmationModal}){
         }
 
         onToggleConfirmationModal(); // This will refresh table and close modal
-
-      } else {
-        const errData = await res.data;
-        console.error(`Failed to delete: ${errData.error}`);
+        messageModal("Deletion complete.", "success");
       }
 
     } catch (err) {
       const errorMsg = err.response?.data?.message || err.response?.data?.error || "Something went wrong while deleting.";
+      messageModal("Deleting record error: ", errorMsg, "error");
       console.error("❌ Error deleting:", errorMsg);    
   
     } finally {

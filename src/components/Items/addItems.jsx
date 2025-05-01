@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import OperationMessage from "../operationMessage";
 
-function AddItems({onToggleShowAddItems, onToggleTableRefresh, data}){
+function AddItems({onToggleShowAddItems, onToggleTableRefresh, data, messageModal}){
 
         const [itemId, setItemId] = useState(''); //this is the id of the item that we are going to edit
         //we will pass it to the route and in there we will check if there is an id retrieve
@@ -18,9 +18,6 @@ function AddItems({onToggleShowAddItems, onToggleTableRefresh, data}){
         const [itemImage, setItemImage] = useState("http://localhost:5000/images/sportsBorrowingSystem.jpeg");   // default image
         const [imagePreview, setImagePreview] = useState("http://localhost:5000/images/sportsBorrowingSystem.jpeg"); // default image
         
-        const [showMessageModal, setShowMessageModal] = useState(false);
-        const [messageData, setMessageData] = useState({message: '', type: ''});
-
         let ImageName = '';
 
         //we will use this useEffect if the this form was called from the edit button in the table
@@ -57,10 +54,9 @@ function AddItems({onToggleShowAddItems, onToggleTableRefresh, data}){
             setItemImage("http://localhost:5000/images/sportsBorrowingSystem.jpeg");   
             setImagePreview("http://localhost:5000/images/sportsBorrowingSystem.jpeg"); // clear preview
             onToggleShowAddItems(); // close the modal
+            messageModal("Table data updated.", "success");
         }
         
-
-
     const handleImagePreview = (e) => {
         const imageFile = e.target.files[0];
         setItemImage(imageFile);
@@ -93,34 +89,19 @@ function AddItems({onToggleShowAddItems, onToggleTableRefresh, data}){
             });
     
             if (response.status === 200) {
-                setMessageData({ message: response.data.message, type: "success" });
-                setShowMessageModal(true);
                 onToggleTableRefresh();
                 handleResetVariables(); // Reset the form fields after successful submission
-            } else {
-                setMessageData({ message: response.data.message, type: "error" });
-                setShowMessageModal(true);
             }
 
-            setTimeout(() => {
-                setShowMessageModal(false);
-                setMessageData({ message: '', type: '' }); // optional clean-up
-            }, 1000)
-
         } catch (err) {
-            // setErrorMessage("Error uploading file or submitting form.");
-            console.error(err);
+            const errorMsg = err.response?.data?.error || "Something went wrong while registering.";
+            messageModal(errorMsg, "error");
+            console.error("Adding Items Error: " , err);
         }
     };
 
     return(
         <div className="items-center h-screen w-screen justify-center flex flex-col inset-0 z-50 fixed drop-shadow-white drop-shadow-2xl">
-            {showMessageModal && 
-                <OperationMessage
-                message={messageData.message}
-                type={messageData.type}
-            />}
-
             <div className=" bg-gray-900 h-fit p-10 rounded-4xl flex w-fit flex-col text-white justify-center">
                 <div className="flex">
                     <p className="flex text-3xl mb-10 font-semibold">{itemId ? 'EDIT' : 'ITEM'} LISTING FORM</p>

@@ -3,7 +3,7 @@ import axios from "axios";
 import ConfirmBorrow from "./confirmBorrow";
 
 
-function BorrowItem({itemid, itemImage, itemName, onClose}){
+function BorrowItem({itemid, itemImage, itemName, onClose, messageModal}){
     const [studentID, setStudentID] = useState('');
     const [quantity , setQuantity] = useState('');
     const [returnDate, setReturnDate] = useState('');
@@ -32,23 +32,21 @@ function BorrowItem({itemid, itemImage, itemName, onClose}){
                 setQuantity('');
 
                 console.log('Borrow Approved:', response.data);
-                onClose(); // close modal
-
-                                // ill put some animations later on here
-                // setTimeout(() => {
-                    
-                // }, 2000);
+                onClose();
 
             }  else if(response.status === 200) {
                 console.log('Student has already borrowed an item:', response.data);
                 setborrowedRecord(response.data);
                 setShowConfirmationModal(true);
+                messageModal("Item(s) borrowed successfully", "success");
                 
             } else {
                 console.log('Borrowing Failed:', response.data);
             }
             
         } catch (err) {
+            const errorMsg = err.response?.data?.error || "Something went wrong while registering.";
+            messageModal("Borrowing Item failed: ", errorMsg, "error");
             console.error("Something Went Wrong:", err);
             // Handle error response here
         }
