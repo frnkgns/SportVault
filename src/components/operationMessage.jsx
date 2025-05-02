@@ -24,6 +24,7 @@ function OperationMessage({ message, type, closeOperationModal }) {
 
     }, [message, type]);
 
+    
     console.log("OperationMessage", message, type);
 
   return (
