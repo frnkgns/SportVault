@@ -24,7 +24,7 @@ function OperationMessage({ message, type, closeOperationModal }) {
 
     }, [message, type]);
 
-    
+
     
     console.log("OperationMessage", message, type);
 
@@ -39,6 +39,7 @@ function OperationMessage({ message, type, closeOperationModal }) {
                 <div>
                     <span className="font-medium">Success!</span> {successMessage}
                 </div>
+                
             </div>
         )}
 
